@@ -27443,20 +27443,29 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
-window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
-  broadcaster: 'pusher',
-  key: "af63c683dc02469f867e",
-  cluster: "eu",
-  forceTLS: true
-});
+/*window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: process.env.MIX_PUSHER_APP_KEY,
+    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+    forceTLS: true
+});*/
+
 /*var channel = window.Echo.channel('my-channel');
 channel.listen('my-event', function(data) {
     console.log('event...');
     alert(JSON.stringify(data));
 });*/
 
-window.Echo.channel('my-channel').listen('my-event', function (e) {
-  console.log('websocket event!!!');
+/*window.Echo.channel('my-channel')
+    .listen('my-event', (e) => {
+        console.log('websocket event!!!');
+    });*/
+
+var pusher = new Pusher("af63c683dc02469f867e", {
+  cluster: 'eu'
+});
+pusher.subscribe('my-channel').bind('my-event', function (data) {
+  console.log('websocket event!!! ' + JSON.stringify(data));
 });
 
 /***/ }),
